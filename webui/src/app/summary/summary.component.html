@@ -1,0 +1,17 @@
+<div class="col-md-12">
+  <div>
+    <input class="form-control" type="text" [(ngModel)]="item"/>
+  </div>
+  <div class="p-2 m-2">
+    <app-container
+      [content]="root"
+      [title]="item"
+      (notifyChange)="extendTimeline()"
+    ></app-container>
+  </div>
+  <div class="flex d-flex justify-content-around">
+    <button class="btn btn-default border-1 border-dark" (click)="back()"><<</button>
+    <button class="btn btn-default border-1 border-dark" (click)="forward()">>></button>
+    <button class="btn btn-success" (click)="save()">Save</button>
+  </div>
+</div>
