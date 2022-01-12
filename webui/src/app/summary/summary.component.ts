@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Container, IContainer, PlainContainer} from "../container/container.model";
-import {SummaryService} from "./summary.service";
+import {Container, IContainer} from "../container/container.model";
 
 @Component({
   selector: 'app-summary',
@@ -9,22 +8,17 @@ import {SummaryService} from "./summary.service";
 })
 export class SummaryComponent implements OnInit {
   @Input() title!: string;
-  root!: IContainer;
+  @Input() root!: Container;
   item!: string;
   states!: IContainer[];
   currentState!: number;
 
-  constructor(private summaryService: SummaryService) {
+  constructor() {
     this.states = [];
     this.currentState = -1;
   }
 
   ngOnInit(): void {
-    this.root = new Container("", null);
-
-    this.summaryService
-      .findById$(1)
-      .subscribe(response => this.root.setStateFromJson(JSON.parse(response.content), null));
     this.extendTimeline();
   }
 
@@ -46,7 +40,4 @@ export class SummaryComponent implements OnInit {
     this.root.setState(this.states[this.currentState]);
   }
 
-  save() {
-    console.debug(JSON.stringify(this.root.serialize()));
-  }
 }

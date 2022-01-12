@@ -1,3 +1,7 @@
 .container-row > * {
   margin-right: 0.5rem;
 }
+
+.action > * {
+  color: gray;
+}

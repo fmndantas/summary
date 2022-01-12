@@ -1,3 +1,21 @@
 .action-bar > button {
   margin-right: 1rem;
 }
+
+.input-bar > *:first-child {
+  padding-right: 0.5rem;
+}
+
+#timeline > button {
+  border: 1px solid gray;
+  border-radius: 0;
+  color: gray;
+}
+
+#timeline button:first-child {
+  border-right: 0;
+}
+
+#timeline > button:last-child {
+  border-left: 0;
+}

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using summary.Models;
 using summary.Services;
 
 namespace summary.Controllers
@@ -26,8 +27,13 @@ namespace summary.Controllers
         [HttpGet("{id}")]
         public IActionResult FindById(int id)
         {
-            _logger.LogInformation($"id = {id}");
             return Ok(_summaryService.FindById(id));
+        }
+
+        [HttpPost]
+        public IActionResult Save([FromBody] Summary summary)
+        {
+            return Ok(_summaryService.Save(summary));
         }
     }
 }

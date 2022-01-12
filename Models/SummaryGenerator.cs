@@ -7,6 +7,16 @@ namespace summary.Models
 {
     public static class SummaryGenerator
     {
+        public static Summary Generate(int nodes, int titleLength)
+        {
+            return new Summary
+            {
+                title = GenerateWord(titleLength),
+                author = GenerateWord(titleLength),
+                content = JsonConvert.SerializeObject(GenerateContent(nodes, titleLength, 2))
+            };
+        }
+
         private static string GenerateWord(int length)
         {
             const string chars = "abcdefghijklmnopqrstuvwxyz0123456789";
@@ -15,6 +25,27 @@ namespace summary.Models
                 .Repeat(chars, length)
                 .Select(s => s[random.Next(s.Length)])
                 .ToArray());
+        }
+
+        private static Container GenerateContent(int nodes, int titleLength, int maximumDeep = 1)
+        {
+            var random = new Random();
+
+            var paths = new List<List<int>>();
+
+            for (var i = 0; i < nodes; ++i)
+            {
+                var pathLength = random.Next(maximumDeep);
+                var path = new List<int>();
+                for (var j = 0; j < pathLength; ++j)
+                {
+                    path.Add(random.Next(4));
+                }
+            
+                paths.Add(path);
+            }
+
+            return GenerateContainerFromPaths(paths, titleLength);
         }
 
         private static Container GenerateContainerFromPaths(List<List<int>> paths, int titleLength)
@@ -66,36 +97,6 @@ namespace summary.Models
             }
 
             return container;
-        }
-
-        private static Container GenerateContent(int nodes, int titleLength)
-        {
-            var random = new Random();
-
-            var paths = new List<List<int>>();
-
-            for (var i = 0; i < nodes; ++i)
-            {
-                var pathLength = random.Next(5);
-                var path = new List<int>();
-                for (var j = 0; j < pathLength; ++j)
-                {
-                    path.Add(random.Next(4));
-                }
-            
-                paths.Add(path);
-            }
-
-            return GenerateContainerFromPaths(paths, titleLength);
-        }
-
-        public static Summary Generate(int nodes, int titleLength)
-        {
-            return new Summary
-            {
-                Title = GenerateWord(titleLength),
-                Content = JsonConvert.SerializeObject(GenerateContent(nodes, titleLength))
-            };
         }
     }
 }

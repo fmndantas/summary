@@ -1,0 +1,23 @@
+<div (click)="showContent(i)"
+     *ngFor="let item of summaries; let i = index"
+     appHighlight=lightgray
+     class="m-2 p-2"
+>
+  <p>Title: {{item.title}}</p>
+  <p>Author: {{item.author}}</p>
+  <p>Progress: {{item.progress | percent}}</p>
+</div>
+<div *ngIf="_showContent" class="custom-modal">
+  <div class="modal-content">
+    <div class="m-2">
+      <app-summary
+        [title]="summary.title"
+        [root]="summary.content">
+      </app-summary>
+    </div>
+    <div class="footer">
+      <button (click)="hideContent()" class="btn btn-danger">Close</button>
+      <button (click)="save()" class="btn btn-success">Save</button>
+    </div>
+  </div>
+</div>

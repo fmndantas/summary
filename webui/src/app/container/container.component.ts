@@ -56,6 +56,14 @@ export class ContainerComponent implements OnInit {
     this._notifyChange();
   }
 
+  liftCopyToRoot() {
+    this.content.liftCopyToRoot();
+  }
+
+  receiveCopy() {
+    this.content.receiveCopy();
+  }
+
   _notifyChange(): void {
     this.notifyChange.emit();
   }

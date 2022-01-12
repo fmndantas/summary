@@ -21,10 +21,7 @@ namespace summary
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services
-                .AddDbContext<SummaryContext>(
-                    opt => opt.UseInMemoryDatabase("Summary")
-                );
+            services.AddDbContext<SummaryContext>(opt => opt.UseInMemoryDatabase("Summary"));
             services.AddScoped<ISummaryService, SummaryService>();
             services.AddCors(options =>
             {
@@ -49,11 +46,11 @@ namespace summary
                 app.UseDeveloperExceptionPage();
             }
 
-            // app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
 
             app.UseRouting();
 
-            // app.UseAuthorization();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }

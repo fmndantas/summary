@@ -10,20 +10,25 @@ namespace summary
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
+            CreateSummaries(host);
+            host.Run();
+        }
 
+        private static void CreateSummaries(IHost host)
+        {
             using (var scope = host.Services.CreateScope())
             {
                 var summaryContext = scope
                     .ServiceProvider
                     .GetRequiredService<SummaryContext>();
 
-                var summary = SummaryGenerator.Generate(20, 20);
- 
-                summaryContext.Add(summary);
+                for (var i = 0; i < 5; ++i)
+                {
+                    summaryContext.Add(SummaryGenerator.Generate(10, 5));
+                }
+
                 summaryContext.SaveChanges();
             }
-
-            host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

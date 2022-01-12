@@ -8,5 +8,7 @@ namespace summary.Services
         List<Summary> FindAll();
 
         Summary FindById(int id);
+
+        Summary Save(Summary summary);
     }
 }

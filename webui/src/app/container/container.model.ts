@@ -21,6 +21,8 @@ export interface IContainer {
 
   get isLeaf(): boolean;
 
+  get isRoot(): boolean;
+
   get totalOfItems(): number;
 
   get doneItems(): number;
@@ -28,6 +30,16 @@ export interface IContainer {
   get isCompleted(): boolean;
 
   setCompleted(completed: boolean): void;
+
+  setFather(father: IContainer): void;
+
+  setContainerBeingCopied(beingCopied: IContainer | null): void;
+
+  liftCopyToRoot(): void;
+
+  receiveCopy(): void;
+
+  getBeginCopied(): IContainer | null;
 
   mark(): void;
 
@@ -56,6 +68,7 @@ export class Container implements IContainer {
   public children!: IContainer[];
   public title: string = "";
   public completed: boolean = false;
+  public beingCopied: IContainer | null = null;
 
   constructor(title: string, father: IContainer | null = null) {
     this.father = father;
@@ -64,6 +77,7 @@ export class Container implements IContainer {
   }
 
   addChild(child: IContainer) {
+    child.setFather(this);
     this.children.push(child);
   }
 
@@ -99,6 +113,10 @@ export class Container implements IContainer {
     return this.numberOfChildren == 0;
   }
 
+  get isRoot() {
+    return this.father == null;
+  }
+
   get isCompleted() {
     if (this.isLeaf) {
       return this.completed;
@@ -110,6 +128,10 @@ export class Container implements IContainer {
     if (this.isLeaf) {
       this.completed = completed;
     }
+  }
+
+  setFather(father: IContainer) {
+    this.father = father;
   }
 
   get totalOfItems() {
@@ -191,5 +213,33 @@ export class Container implements IContainer {
     })
     this.title = json.title;
     this.completed = json.completed;
+  }
+
+  liftCopyToRoot(): void {
+    let container: IContainer = this;
+    while (container.Father != null) {
+      container = container.Father;
+    }
+    container.setContainerBeingCopied(this.getState());
+  }
+
+  getBeginCopied(): IContainer | null {
+    return this.beingCopied;
+  }
+
+  receiveCopy(): void {
+    let container: IContainer = this;
+    while (container.Father != null) {
+      container = container.Father;
+    }
+    let toCopy = container.getBeginCopied();
+    if (toCopy != null) {
+      this.addChild(toCopy);
+      container.setContainerBeingCopied(null);
+    }
+  }
+
+  setContainerBeingCopied(beginCopied: IContainer | null): void {
+    this.beingCopied = beginCopied;
   }
 }

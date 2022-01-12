@@ -10,7 +10,7 @@
       {{content.Title}}
     </div>
     <span style="color: gray"> | </span>
-    <div class="d-flex">
+    <div class="d-flex action">
       <a (click)="addNested()" class="p-1">
         <i class="fa fa-level-down"></i>
       </a>
@@ -22,6 +22,12 @@
       </a>
       <a (click)="edit()" class="p-1">
         <i class="fa fa-edit"></i>
+      </a>
+      <a *ngIf="hasFather" (click)="liftCopyToRoot()" class="p-1">
+        <i class="fa fa-copy"></i>
+      </a>
+      <a (click)="receiveCopy()" class="p-1">
+        <i class="fa fa-paste"></i>
       </a>
       <a *ngIf="hasFather" (click)="removeFromFather()" class="p-1">
         <i class="fa fa-trash"></i>
