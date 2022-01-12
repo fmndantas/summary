@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Container, IContainer, PlainContainer} from "../container/container.model";
+import {SummaryService} from "./summary.service";
 
 @Component({
   selector: 'app-summary',
@@ -13,66 +14,17 @@ export class SummaryComponent implements OnInit {
   states!: IContainer[];
   currentState!: number;
 
-  constructor() {
+  constructor(private summaryService: SummaryService) {
     this.states = [];
     this.currentState = -1;
   }
 
   ngOnInit(): void {
     this.root = new Container("", null);
-    this.root.setStateFromJson({
-      title: "chapter 1",
-      completed: false,
-      children: [
-        {
-          title: "subtopic 1.1",
-          completed: true,
-          children: [
-            {
-              title: "subsubtopic 1.1.1",
-              completed: false,
-              children: []
-            },
-            {
-              title: "subsubtopic 1.1.2",
-              completed: false,
-              children: []
-            },
-            {
-              title: "subsubtopic 1.1.3",
-              completed: true,
-              children: []
-            },
-          ]
-        },
-        {
-          title: "subtopic 1.1",
-          completed: true,
-          children: []
-        },
-        {
-          title: "subtopic 1.1",
-          completed: true,
-          children: [
-            {
-              title: "subsubtopic 1.1.1",
-              completed: false,
-              children: []
-            },
-            {
-              title: "subsubtopic 1.1.2",
-              completed: false,
-              children: []
-            },
-            {
-              title: "subsubtopic 1.1.3",
-              completed: true,
-              children: []
-            },
-          ]
-        }
-      ]
-    }, null);
+
+    this.summaryService
+      .findById$(1)
+      .subscribe(response => this.root.setStateFromJson(JSON.parse(response.content), null));
     this.extendTimeline();
   }
 
