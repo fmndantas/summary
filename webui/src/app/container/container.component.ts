@@ -56,8 +56,9 @@ export class ContainerComponent implements OnInit {
     this._notifyChange();
   }
 
-  liftCopyToRoot() {
+  liftCopyToRootAndCut() {
     this.content.liftCopyToRoot();
+    this.removeFromFather();
   }
 
   receiveCopy() {

@@ -10,7 +10,7 @@ namespace summary
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
-            CreateSummaries(host);
+            // CreateSummaries(host);
             host.Run();
         }
 

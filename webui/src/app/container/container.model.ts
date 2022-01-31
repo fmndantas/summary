@@ -29,17 +29,19 @@ export interface IContainer {
 
   get isCompleted(): boolean;
 
+  get Root(): IContainer;
+
   setCompleted(completed: boolean): void;
 
   setFather(father: IContainer): void;
 
   setContainerBeingCopied(beingCopied: IContainer | null): void;
 
+  getContainerBeingCopied(): IContainer | null;
+
   liftCopyToRoot(): void;
 
   receiveCopy(): void;
-
-  getBeginCopied(): IContainer | null;
 
   mark(): void;
 
@@ -53,7 +55,7 @@ export interface IContainer {
 
   setState(ref: IContainer): void;
 
-  serialize(): any;
+  serialize(): PlainContainer;
 
   setStateFromJson(json: PlainContainer, reference: IContainer | null): void;
 
@@ -145,13 +147,19 @@ export class Container implements IContainer {
 
   get doneItems() {
     if (this.isLeaf) {
-      return this.completed
-        ? 1
-        : 0;
+      return this.completed ? 1 : 0;
     }
     let ans: number = 0;
     this.children.forEach(x => ans += x.doneItems);
     return ans;
+  }
+
+  get Root(): IContainer {
+    let container: IContainer = this;
+    while (container.Father != null) {
+      container = container.Father;
+    }
+    return container;
   }
 
   mark() {
@@ -216,23 +224,16 @@ export class Container implements IContainer {
   }
 
   liftCopyToRoot(): void {
-    let container: IContainer = this;
-    while (container.Father != null) {
-      container = container.Father;
-    }
-    container.setContainerBeingCopied(this.getState());
+    this.Root.setContainerBeingCopied(this.getState());
   }
 
-  getBeginCopied(): IContainer | null {
+  getContainerBeingCopied(): IContainer | null {
     return this.beingCopied;
   }
 
   receiveCopy(): void {
-    let container: IContainer = this;
-    while (container.Father != null) {
-      container = container.Father;
-    }
-    let toCopy = container.getBeginCopied();
+    let container: IContainer = this.Root;
+    let toCopy = container.getContainerBeingCopied();
     if (toCopy != null) {
       this.addChild(toCopy);
       container.setContainerBeingCopied(null);

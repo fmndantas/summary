@@ -19,6 +19,7 @@ namespace summary.Services
         {
             return _context
                 .Set<Summary>()
+                .OrderBy(x => x.Title)
                 .ToList();
         }
 
@@ -26,7 +27,7 @@ namespace summary.Services
         {
             return _context
                 .Set<Summary>()
-                .FirstOrDefault(x => x.id == id);
+                .FirstOrDefault(x => x.Id == id);
         }
 
         public Summary Save(Summary summary)

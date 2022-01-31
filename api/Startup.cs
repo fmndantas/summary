@@ -17,16 +17,14 @@ namespace summary
         }
 
         public IConfiguration Configuration { get; }
+        private readonly string CorsServiceName = "CorsPolicy";
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-            services.AddDbContext<SummaryContext>(opt => opt.UseInMemoryDatabase("Summary"));
-            services.AddScoped<ISummaryService, SummaryService>();
             services.AddCors(options =>
             {
                 options.AddPolicy(
-                    "CorsPolicy",
+                    CorsServiceName,
                     builder =>
                     {
                         builder.WithOrigins("http://localhost:4200")
@@ -35,18 +33,24 @@ namespace summary
                             .AllowCredentials();
                     });
             });
+            services.AddControllers();
+            var connectionString = Configuration["SummaryContext:ConnectionString"];
+            services.AddDbContext<SummaryContext>(opt =>
+                opt.UseNpgsql(connectionString)
+            );
+            services.AddScoped<ISummaryService, SummaryService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseCors("CorsPolicy");
+            app.UseCors(CorsServiceName);
 
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
 
             app.UseRouting();
 

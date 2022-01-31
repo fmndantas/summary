@@ -11,9 +11,9 @@ namespace summary.Models
         {
             return new Summary
             {
-                title = GenerateWord(titleLength),
-                author = GenerateWord(titleLength),
-                content = JsonConvert.SerializeObject(GenerateContent(nodes, titleLength, 2))
+                Title = GenerateWord(titleLength),
+                Author = GenerateWord(titleLength),
+                Content = JsonConvert.SerializeObject(GenerateContent(nodes, titleLength, 2))
             };
         }
 
