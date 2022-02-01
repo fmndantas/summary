@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using summary.Models;
 
-namespace summary.Models
+namespace api.Models
 {
     public class SummaryContext : DbContext
     {

@@ -1,46 +1,34 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
 using summary.Models;
+using summary.Services;
 
-namespace summary.Services
+namespace api.Services
 {
     public class SummaryService : ISummaryService
     {
-        private DbContext _context;
+        private IAbstractRepository<Summary> _repository;
 
-        public SummaryService(SummaryContext context)
+        public SummaryService(IAbstractRepository<Summary> repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         public List<Summary> FindAll()
         {
-            return _context
-                .Set<Summary>()
-                .OrderBy(x => x.Title)
-                .ToList();
+            return _repository.FindAll();
         }
 
         public Summary FindById(int id)
         {
-            return _context
-                .Set<Summary>()
+            return _repository
+                .FindAll()
                 .FirstOrDefault(x => x.Id == id);
         }
 
         public Summary Save(Summary summary)
         {
-            if (!summary.Updatable)
-            {
-                _context.Add(summary);
-            }
-            else
-            {
-                _context.Update(summary);
-            }
-            _context.SaveChanges();
+            _repository.Add(summary);
             return summary;
         }
     }

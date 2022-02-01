@@ -1,3 +1,5 @@
+using api.Models;
+using api.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +23,7 @@ namespace summary
 
         public void ConfigureServices(IServiceCollection services)
         {
+            // Cors
             services.AddCors(options =>
             {
                 options.AddPolicy(
@@ -33,11 +36,19 @@ namespace summary
                             .AllowCredentials();
                     });
             });
+            
+            // Controllers
             services.AddControllers();
+            
+            // Database
             var connectionString = Configuration["SummaryContext:ConnectionString"];
             services.AddDbContext<SummaryContext>(opt =>
                 opt.UseNpgsql(connectionString)
             );
+            
+            // Summary
+            services.AddScoped<IAbstractRepositoryImpl<Summary>, AbstractRepositoryDatabaseImpl<Summary>>();
+            services.AddScoped<IAbstractRepository<Summary>, AbstractRepository<Summary>>();
             services.AddScoped<ISummaryService, SummaryService>();
         }
 
