@@ -1,3 +1,5 @@
+import {UUID} from "angular2-uuid";
+
 export interface PlainContainer {
   title: string;
   completed: boolean;
@@ -243,4 +245,8 @@ export class Container implements IContainer {
   setContainerBeingCopied(beginCopied: IContainer | null): void {
     this.beingCopied = beginCopied;
   }
+}
+
+export const generateUuid = () => {
+  return "uuid" + UUID.UUID().replace(/-/g, "");
 }

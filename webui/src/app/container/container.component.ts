@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {IContainer} from "./container.model";
+import {generateUuid, IContainer} from "./container.model";
 
 @Component({
   selector: 'app-container',
@@ -11,14 +11,21 @@ export class ContainerComponent implements OnInit {
   @Input() title!: string;
   @Output() notifyChange: EventEmitter<void> = new EventEmitter<void>();
 
+  headerUuid!: string;
+  bodyUuid!: string;
+  containerUuid!: string;
+
   constructor() {
+    this.headerUuid = generateUuid();
+    this.bodyUuid = generateUuid();
+    this.containerUuid = generateUuid();
   }
 
   ngOnInit(): void {
 
   }
 
-  get hasFather(): boolean {
+  get isNotRoot(): boolean {
     return this.content.Father != null;
   }
 
@@ -26,7 +33,29 @@ export class ContainerComponent implements OnInit {
     return this.content.isCompleted;
   }
 
-  mark(): void {
+  get TitleStyle(): any {
+    let textDecoration = !this.content.isCompleted
+      ? "none"
+      : "line-through";
+    let color = this.content.isCompleted
+      ? "gray"
+      : "black";
+    return {"text-decoration": textDecoration, "color": color};
+  }
+
+  get buttonClassOrNot(): string {
+    return this.content.isLeaf ? "" : "accordion-button";
+  }
+
+  get accordionItemClassOrNot(): string {
+    return this.content.isLeaf ? "" : "accordion-item";
+  }
+
+  addHash(what: string): string {
+    return `#${what}`;
+  }
+
+  toggle(): void {
     this.content.mark();
     this._notifyChange();
   }
@@ -67,15 +96,5 @@ export class ContainerComponent implements OnInit {
 
   _notifyChange(): void {
     this.notifyChange.emit();
-  }
-
-  get TitleStyle(): any {
-    let textDecoration = !this.content.isCompleted
-      ? "none"
-      : "line-through";
-    let color = this.content.isCompleted
-      ? "gray"
-      : "black";
-    return {"text-decoration": textDecoration, "color": color};
   }
 }
