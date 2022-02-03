@@ -7,4 +7,5 @@ public interface IAbstractRepositoryImpl<T>
     void Add(T entity);
     void Update(T entity);
     List<T> FindAll();
+    void Commit();
 }

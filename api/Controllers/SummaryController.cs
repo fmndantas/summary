@@ -35,5 +35,11 @@ namespace api.Controllers
         {
             return Ok(_summaryService.Save(summary));
         }
+
+        [HttpPut]
+        public IActionResult Update([FromBody] Summary summary)
+        {
+            return Ok(_summaryService.Update(summary));
+        }
     }
 }

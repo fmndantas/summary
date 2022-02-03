@@ -38,9 +38,16 @@ export class ListComponent implements OnInit {
     this.summary = new EmptyAppSummary();
   }
 
-  save() {
+  handleSave() {
     this.summaryService
       .save$(this.summary.serialize)
-      .subscribe(response => console.debug(response));
+      .subscribe();
+  }
+
+  handleUpdate() {
+    this.summaryService
+      .update$(this.summary.serialize)
+      .subscribe();
+    this._showContent = false;
   }
 }

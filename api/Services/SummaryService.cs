@@ -31,5 +31,11 @@ namespace api.Services
             _repository.Add(summary);
             return summary;
         }
+
+        public Summary Update(Summary summary)
+        {
+            _repository.Update(summary);
+            return summary;
+        }
     }
 }

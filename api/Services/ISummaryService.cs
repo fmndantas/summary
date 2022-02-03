@@ -10,5 +10,7 @@ namespace api.Services
         Summary FindById(int id);
 
         Summary Save(Summary summary);
+
+        Summary Update(Summary summary);
     }
 }

@@ -25,4 +25,9 @@ export class SummaryService {
     return this.http
       .post<ISummary>(`${environment.api}summary`, summary);
   }
+
+  public update$(summary: ISummary): Observable<ISummary> {
+    return this.http
+      .put<ISummary>(`${environment.api}summary`, summary);
+  }
 }

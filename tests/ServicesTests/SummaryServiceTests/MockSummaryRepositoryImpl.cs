@@ -14,7 +14,7 @@ public class MockSummaryRepositoryImpl : IAbstractRepositoryImpl<Summary>
         entities = new List<Summary>();
         Id = 1;
     }
-    
+
     public void Add(Summary entity)
     {
         entity.Id = Id++;
@@ -28,5 +28,9 @@ public class MockSummaryRepositoryImpl : IAbstractRepositoryImpl<Summary>
     public List<Summary> FindAll()
     {
         return entities;
+    }
+
+    public void Commit()
+    {
     }
 }
