@@ -1,47 +1,66 @@
-<div class="col-md-12">
-  <div class="d-flex align-items-baseline container-row">
-    <div *ngIf="content.isLeaf">
-      <input type="checkbox" (change)="mark()" [checked]="isCompleted"/>
-    </div>
-    <div *ngIf="!content.isLeaf">
-      ({{content.doneItems}}/{{content.totalOfItems}})
-    </div>
-    <div [style]="TitleStyle">
-      {{content.Title}}
-    </div>
-    <span style="color: gray"> | </span>
-    <div class="d-flex action">
-      <a (click)="addNested()" class="p-1">
-        <i class="fa fa-level-down"></i>
-      </a>
-      <a *ngIf="hasFather" (click)="addEqualBefore()" class="p-1">
-        <i class="fa fa-arrow-up"></i>
-      </a>
-      <a *ngIf="hasFather" (click)="addEqualAfter()" class="p-1">
-        <i class="fa fa-arrow-down"></i>
-      </a>
-      <a (click)="edit()" class="p-1">
-        <i class="fa fa-edit"></i>
-      </a>
-      <a *ngIf="hasFather" (click)="liftCopyToRootAndCut()" class="p-1">
-        <i class="fa fa-copy"></i>
-      </a>
-      <a (click)="receiveCopy()" class="p-1">
-        <i class="fa fa-paste"></i>
-      </a>
-      <a *ngIf="hasFather" (click)="removeFromFather()" class="p-1">
-        <i class="fa fa-trash"></i>
-      </a>
-    </div>
-  </div>
-  <div *ngIf="!content.isLeaf">
-    <ul *ngFor="let child of content.Children">
-      <app-container
-        [content]="child"
-        [title]="title"
-        (notifyChange)="_notifyChange()"
+<div class="col-md-12 accordion" [id]="containerUuid">
+  <div [class]="accordionItemClassOrNot">
+    <div class="accordion-header" [id]="headerUuid">
+      <button [class]="buttonClassOrNot"
+              type="button"
+              data-bs-toggle="collapse"
+              [attr.data-bs-target]="addHash(bodyUuid)"
+              aria-expanded="true"
+              [attr.aria-controls]="bodyUuid"
       >
-      </app-container>
-    </ul>
+        <div class="d-flex align-items-baseline container-row">
+          <div *ngIf="content.isLeaf">
+            <input type="checkbox" (change)="toggle()" [checked]="isCompleted"/>
+          </div>
+          <div *ngIf="!content.isLeaf">
+            ({{content.doneItems}}/{{content.totalOfItems}})
+          </div>
+          <div [style]="TitleStyle">
+            {{content.Title}}
+          </div>
+          <span style="color: gray"> | </span>
+          <div class="d-flex action">
+            <a (click)="addNested()" class="p-1">
+              <i class="fa fa-level-down"></i>
+            </a>
+            <a *ngIf="isNotRoot" (click)="addEqualBefore()" class="p-1">
+              <i class="fa fa-arrow-up"></i>
+            </a>
+            <a *ngIf="isNotRoot" (click)="addEqualAfter()" class="p-1">
+              <i class="fa fa-arrow-down"></i>
+            </a>
+            <a (click)="edit()" class="p-1">
+              <i class="fa fa-edit"></i>
+            </a>
+            <a *ngIf="isNotRoot" (click)="liftCopyToRootAndCut()" class="p-1">
+              <i class="fa fa-copy"></i>
+            </a>
+            <a (click)="receiveCopy()" class="p-1">
+              <i class="fa fa-paste"></i>
+            </a>
+            <a *ngIf="isNotRoot" (click)="removeFromFather()" class="p-1">
+              <i class="fa fa-trash"></i>
+            </a>
+          </div>
+        </div>
+      </button>
+    </div>
+    <div [id]="bodyUuid"
+         class="accordion-collapse collapse show"
+         [attr.aria-labelledby]="headerUuid"
+         [attr.data-bs-parent]="addHash(containerUuid)"
+         *ngIf="!content.isLeaf"
+    >
+      <div class="accordion-body">
+        <ul *ngFor="let child of content.Children">
+          <app-container
+            [content]="child"
+            [title]="title"
+            (notifyChange)="_notifyChange()"
+          >
+          </app-container>
+        </ul>
+      </div>
+    </div>
   </div>
 </div>
