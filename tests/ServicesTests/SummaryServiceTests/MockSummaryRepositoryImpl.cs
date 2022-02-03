@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using api.Models;
-using summary.Models;
+using api.Models.Entities;
 
 namespace tests.ServicesTests.SummaryServiceTests;
 

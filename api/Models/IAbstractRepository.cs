@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace summary.Models;
+namespace api.Models;
 
 public interface IAbstractRepository<T>
 {

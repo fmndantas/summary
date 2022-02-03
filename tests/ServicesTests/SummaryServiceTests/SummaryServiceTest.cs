@@ -1,8 +1,7 @@
 using api.Models;
+using api.Models.Entities;
 using api.Services;
 using NUnit.Framework;
-using summary.Models;
-using summary.Services;
 
 namespace tests.ServicesTests.SummaryServiceTests;
 

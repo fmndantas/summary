@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using api.Models.Dto;
+using api.Models.Entities;
 using Newtonsoft.Json;
 
-namespace summary.Models
+namespace api.Models.Utils
 {
     public static class SummaryGenerator
     {

@@ -1,10 +1,10 @@
 using api.Models;
+using api.Models.Utils;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using summary.Models;
 
-namespace summary
+namespace api
 {
     public class Program
     {

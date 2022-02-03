@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace summary.Models
+namespace api.Models.Entities
 {
     public class Summary
     {

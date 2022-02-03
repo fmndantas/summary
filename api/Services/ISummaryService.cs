@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using summary.Models;
+using api.Models.Entities;
 
-namespace summary.Services
+namespace api.Services
 {
     public interface ISummaryService
     {

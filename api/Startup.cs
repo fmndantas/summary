@@ -1,4 +1,5 @@
 using api.Models;
+using api.Models.Entities;
 using api.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -6,10 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using summary.Models;
-using summary.Services;
 
-namespace summary
+namespace api
 {
     public class Startup
     {

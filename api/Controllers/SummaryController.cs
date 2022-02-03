@@ -1,9 +1,9 @@
+using api.Models.Entities;
+using api.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using summary.Models;
-using summary.Services;
 
-namespace summary.Controllers
+namespace api.Controllers
 {
     [ApiController]
     [Route("[controller]")]

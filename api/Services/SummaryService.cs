@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
-using summary.Models;
-using summary.Services;
+using api.Models;
+using api.Models.Entities;
 
 namespace api.Services
 {
