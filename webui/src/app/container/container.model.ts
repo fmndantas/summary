@@ -61,6 +61,8 @@ export interface IContainer {
 
   setStateFromJson(json: PlainContainer, reference: IContainer | null): void;
 
+  removeThisFromFather(): void;
+
   // todo moveDown
   // todo moveUp
   // todo collapse
@@ -244,6 +246,10 @@ export class Container implements IContainer {
 
   setContainerBeingCopied(beginCopied: IContainer | null): void {
     this.beingCopied = beginCopied;
+  }
+
+  removeThisFromFather() {
+    this.Father?.removeChild(this);
   }
 }
 

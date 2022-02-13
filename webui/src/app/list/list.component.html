@@ -1,23 +1,46 @@
-<div (click)="showContent(i)"
-     *ngFor="let item of summaries; let i = index"
+<button class="btn btn-light m-2"
+        (click)="openAddSummary()"
+>
+  Add new summary
+</button>
+<div *ngFor="let item of summaries; let i = index"
      appHighlight=lightgray
      class="m-2 p-2"
 >
   <p>Title: {{item.title}}</p>
   <p>Author: {{item.author}}</p>
   <p>Progress: {{item.progress | percent}}</p>
-</div>
-<div *ngIf="_showContent" class="custom-modal">
-  <div class="modal-content">
-    <div class="m-2">
-      <app-summary
-        [title]="summary.title"
-        [root]="summary.content">
-      </app-summary>
-    </div>
-    <div class="footer">
-      <button (click)="hideContent()" class="btn btn-danger">Close</button>
-      <button (click)="handleUpdate()" class="btn btn-success">Save</button>
-    </div>
+  <div class="action-bar">
+    <button class="btn btn-primary" (click)="openEditContent(i)">Edit content</button>
+    <button class="btn btn-primary" (click)="openEditSummary(i)">Edit metadata</button>
+    <button class="btn btn-danger" (click)="handleDelete(i)">Remove</button>
   </div>
 </div>
+<!-- Show content -->
+<app-generic-modal
+  *ngIf="_showContentForm; else ngTemplateSummaryForm"
+  #form
+  [visible]="_showContentForm"
+  [width]="1000"
+  (handleConfirm)="handleConfirm()"
+  (handleCancel)="hideContentAndUpdateSummaries()"
+>
+  <app-summary #content
+               [summary]="summary"
+  >
+  </app-summary>
+</app-generic-modal>
+<!-- Show form to add new summary -->
+<ng-template #ngTemplateSummaryForm>
+  <app-generic-modal
+    #form
+    [visible]="_showSummaryForm"
+    title="Create summary"
+    (handleConfirm)="handleConfirm()"
+    (handleCancel)="hideContentAndUpdateSummaries()"
+  >
+    <app-summary-form #content
+                      [summary]="summary"
+    ></app-summary-form>
+  </app-generic-modal>
+</ng-template>

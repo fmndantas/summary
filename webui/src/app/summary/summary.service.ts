@@ -30,4 +30,10 @@ export class SummaryService {
     return this.http
       .put<ISummary>(`${environment.api}summary`, summary);
   }
+
+  public delete$(summary: ISummary): Observable<any> {
+    let id = summary.id;
+    return this.http
+      .delete<any>(`${environment.api}summary/${id}`);
+  }
 }

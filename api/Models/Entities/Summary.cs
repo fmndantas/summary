@@ -8,9 +8,9 @@ namespace api.Models.Entities
         public string Title { get; set; }
 
         public string Author { get; set; }
-        public string Content { get; set; }
-        
-        [NotMapped]
-        public bool Updatable => Id != 0;
+        public string Root { get; set; }
+        public int? Year { get; set; }
+
+        [NotMapped] public bool Updatable => Id != 0;
     }
 }

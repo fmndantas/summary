@@ -15,7 +15,7 @@ namespace api.Models.Utils
             {
                 Title = GenerateWord(titleLength),
                 Author = GenerateWord(titleLength),
-                Content = JsonConvert.SerializeObject(GenerateContent(nodes, titleLength, 2))
+                Root = JsonConvert.SerializeObject(GenerateContent(nodes, titleLength, 2))
             };
         }
 

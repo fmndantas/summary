@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {GenericModalService} from "./generic-modal/generic-modal.service";
+// import {IModalRegistry} from "./generic-modal/generic-modal.model";
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'webui';
+  constructor(private modalService: GenericModalService) {
+  }
+
+  // get Modals(): IModalRegistry {
+  //   return this.modalService.registry;
+  // }
 }

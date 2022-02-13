@@ -1,0 +1,13 @@
+form > div {
+  margin-bottom: 1rem;
+}
+
+form > div:last-child {
+  margin-bottom: 0;
+}
+
+.attention-font {
+  font-size: 12px;
+  font-weight: bold;
+  color: red;
+}

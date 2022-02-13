@@ -1,6 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {SummaryService} from "../summary/summary.service";
-import {AppSummary, EmptyAppSummary, ISummary} from "../summary/summary.model";
+import {AppSummary, NullAppSummary, ISummary} from "../summary/summary.model";
+import {IModal} from "../generic-modal/generic-modal.model";
 
 @Component({
   selector: 'app-list',
@@ -8,9 +9,12 @@ import {AppSummary, EmptyAppSummary, ISummary} from "../summary/summary.model";
   styleUrls: ['./list.component.css']
 })
 export class ListComponent implements OnInit {
+  @ViewChild("form") form!: IModal;
+
   summaries!: AppSummary[];
-  summary: AppSummary = new EmptyAppSummary();
-  _showContent: boolean = false;
+  summary: AppSummary = new NullAppSummary();
+  _showContentForm: boolean = false;
+  _showSummaryForm: boolean = false;
 
   constructor(private summaryService: SummaryService) {
   }
@@ -27,27 +31,51 @@ export class ListComponent implements OnInit {
       });
   }
 
-  showContent(i: number) {
+  setCurrentSummary(i: number) {
     this.summary = this.summaries[i];
-    this._showContent = true;
   }
 
-  hideContent() {
+  setCurrentSummaryEmpty() {
+    this.summary = new NullAppSummary();
+  }
+
+  openEditContent(i: number) {
+    this.setCurrentSummary(i);
+    this._showContentForm = true;
+  }
+
+  openAddSummary() {
+    this._showSummaryForm = true;
+  }
+
+  openEditSummary(i: number) {
+    this.setCurrentSummary(i);
+    this._showSummaryForm = true;
+  }
+
+  hideContentAndUpdateSummaries() {
+    this._showContentForm = false;
+    this._showSummaryForm = false;
     this.fetchSummaries();
-    this._showContent = false;
-    this.summary = new EmptyAppSummary();
+    this.setCurrentSummaryEmpty();
   }
 
-  handleSave() {
-    this.summaryService
-      .save$(this.summary.serialize)
-      .subscribe();
+  handleConfirm() {
+    let newSummary: ISummary = this.form.serialize();
+    if (this.summary.empty) {
+      this.summaryService
+        .save$(newSummary)
+        .subscribe(_ => this.hideContentAndUpdateSummaries());
+    } else {
+      this.summaryService
+        .update$(newSummary)
+        .subscribe(_ => this.hideContentAndUpdateSummaries());
+    }
   }
 
-  handleUpdate() {
+  handleDelete(i: number) {
     this.summaryService
-      .update$(this.summary.serialize)
-      .subscribe();
-    this._showContent = false;
+      .delete$(this.summaries[i].serialize)
+      .subscribe(_ => this.hideContentAndUpdateSummaries());
   }
 }

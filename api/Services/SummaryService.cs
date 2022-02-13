@@ -37,5 +37,10 @@ namespace api.Services
             _repository.Update(summary);
             return summary;
         }
+
+        public Summary Delete(int id)
+        {
+            return _repository.Delete(id);
+        }
     }
 }

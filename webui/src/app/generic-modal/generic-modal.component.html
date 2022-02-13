@@ -1,0 +1,18 @@
+<div *ngIf="visible">
+  <swal
+    [title]="title"
+    [text]="message"
+    [swalVisible]="visible"
+    [showConfirmButton]="showConfirmButton"
+    [confirmButtonText]="confirmButtonText"
+    [showCancelButton]="showCancelButton"
+    [cancelButtonText]="cancelButtonText"
+    [width]="width"
+    (confirm)="_handleConfirm()"
+    (didDestroy)="_handleCancel()"
+  >
+    <div *swalPortal="undefined">
+      <ng-content></ng-content>
+    </div>
+  </swal>
+</div>

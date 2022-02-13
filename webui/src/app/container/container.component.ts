@@ -7,7 +7,7 @@ import {generateUuid, IContainer} from "./container.model";
   styleUrls: ['./container.component.css']
 })
 export class ContainerComponent implements OnInit {
-  @Input() content!: IContainer;
+  @Input() delegate!: IContainer;
   @Input() title!: string;
   @Output() notifyChange: EventEmitter<void> = new EventEmitter<void>();
 
@@ -22,33 +22,32 @@ export class ContainerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
   }
 
   get isNotRoot(): boolean {
-    return this.content.Father != null;
+    return this.delegate.Father != null;
   }
 
   get isCompleted(): boolean {
-    return this.content.isCompleted;
+    return this.delegate.isCompleted;
   }
 
   get TitleStyle(): any {
-    let textDecoration = !this.content.isCompleted
+    let textDecoration = !this.delegate.isCompleted
       ? "none"
       : "line-through";
-    let color = this.content.isCompleted
+    let color = this.delegate.isCompleted
       ? "gray"
       : "black";
     return {"text-decoration": textDecoration, "color": color};
   }
 
   get buttonClassOrNot(): string {
-    return this.content.isLeaf ? "" : "accordion-button";
+    return this.delegate.isLeaf ? "" : "accordion-button";
   }
 
   get accordionItemClassOrNot(): string {
-    return this.content.isLeaf ? "" : "accordion-item";
+    return this.delegate.isLeaf ? "" : "accordion-item";
   }
 
   addHash(what: string): string {
@@ -56,42 +55,42 @@ export class ContainerComponent implements OnInit {
   }
 
   toggle(): void {
-    this.content.mark();
+    this.delegate.mark();
     this._notifyChange();
   }
 
   addNested(): void {
-    this.content.addNested(this.title);
+    this.delegate.addNested(this.title);
     this._notifyChange();
   }
 
   addEqualAfter(): void {
-    this.content.addEqualAfter(this.title);
+    this.delegate.addEqualAfter(this.title);
     this._notifyChange();
   }
 
   addEqualBefore(): void {
-    this.content.addEqualBefore(this.title);
+    this.delegate.addEqualBefore(this.title);
     this._notifyChange();
   }
 
   edit(): void {
-    this.content.Title = this.title;
+    this.delegate.Title = this.title;
     this._notifyChange();
   }
 
-  removeFromFather(): void {
-    this.content.Father?.removeChild(this.content);
+  removeThisFromFather(): void {
+    this.delegate.removeThisFromFather();
     this._notifyChange();
   }
 
   liftCopyToRootAndCut() {
-    this.content.liftCopyToRoot();
-    this.removeFromFather();
+    this.delegate.liftCopyToRoot();
+    this.removeThisFromFather();
   }
 
   receiveCopy() {
-    this.content.receiveCopy();
+    this.delegate.receiveCopy();
   }
 
   _notifyChange(): void {

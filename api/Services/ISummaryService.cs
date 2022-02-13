@@ -12,5 +12,7 @@ namespace api.Services
         Summary Save(Summary summary);
 
         Summary Update(Summary summary);
+
+        Summary Delete(int id);
     }
 }

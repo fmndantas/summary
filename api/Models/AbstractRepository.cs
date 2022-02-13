@@ -11,18 +11,23 @@ public class AbstractRepository<T> : IAbstractRepository<T> where T : class
         _impl = impl;
     }
 
-    public void Add(T entity)
+    public T Add(T entity)
     {
-        _impl.Add(entity);
+        return _impl.Add(entity);
     }
 
-    public void Update(T entity)
+    public T Update(T entity)
     {
-        _impl.Update(entity);
+        return _impl.Update(entity);
     }
 
     public List<T> FindAll()
     {
         return _impl.FindAll();
+    }
+
+    public T Delete(int id)
+    {
+        return _impl.Delete(id);
     }
 }
