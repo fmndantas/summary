@@ -1,9 +1,9 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {IModal} from "../../generic-modal/generic-modal.model";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Observable} from "rxjs";
-import {AppSummary, NullAppSummary, ISummary} from "../summary.model";
-import {Container, IContainer} from "../../container/container.model";
+import {AppSummary, ISummary} from "../summary.model";
+import {IContainer} from "../../container/container.model";
 
 @Component({
   selector: 'app-summary-form',
