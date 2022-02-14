@@ -1,0 +1,39 @@
+<form id=form [formGroup]="form" class="form-group">
+  <div class="d-flex flex-column align-items-start">
+    <span class="attention-font"
+          *ngIf="getFormControl('title').touched && !getFormControl('title').valid"
+    >
+      *Title is required
+    </span>
+    <input
+      id="in-title"
+      type="text"
+      placeholder="Title"
+      class="form-control"
+      [formControl]="getFormControl('title')"
+    >
+  </div>
+  <div class="d-flex flex-column align-items-start">
+    <span class="attention-font"
+          *ngIf="getFormControl('author').touched && !getFormControl('author').valid"
+    >
+      *Author is required
+    </span>
+    <input
+      id="in-author"
+      type="text"
+      placeholder="Author"
+      class="form-control"
+      [formControl]="getFormControl('author')"
+    >
+  </div>
+  <div>
+    <input
+      id="in-year"
+      type="text"
+      placeholder="Year"
+      class="form-control"
+      [formControl]="getFormControl('year')"
+    >
+  </div>
+</form>

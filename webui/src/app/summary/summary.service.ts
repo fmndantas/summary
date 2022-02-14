@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {HttpClient, HttpResponse} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {ISummary} from "./summary.model";
 import {Observable} from "rxjs";
 import {environment} from "../../environments/environment";
@@ -29,5 +29,11 @@ export class SummaryService {
   public update$(summary: ISummary): Observable<ISummary> {
     return this.http
       .put<ISummary>(`${environment.api}summary`, summary);
+  }
+
+  public delete$(summary: ISummary): Observable<any> {
+    let id = summary.id;
+    return this.http
+      .delete<any>(`${environment.api}summary/${id}`);
   }
 }

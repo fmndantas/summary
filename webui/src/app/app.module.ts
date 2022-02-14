@@ -5,11 +5,14 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {ContainerComponent} from './container/container.component';
 import {SummaryComponent} from './summary/summary.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from "@angular/common/http";
 import {ListComponent} from './list/list.component';
 import {CommonModule} from "@angular/common";
-import { HighlightDirective } from './highlight.directive';
+import {HighlightDirective} from './highlight.directive';
+import {SweetAlert2Module} from "@sweetalert2/ngx-sweetalert2";
+import {GenericModalComponent} from './generic-modal/generic-modal.component';
+import {SummaryFormComponent} from './summary/summary-form/summary-form.component';
 
 @NgModule({
   declarations: [
@@ -18,13 +21,17 @@ import { HighlightDirective } from './highlight.directive';
     SummaryComponent,
     ListComponent,
     HighlightDirective,
+    GenericModalComponent,
+    SummaryFormComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     CommonModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    SweetAlert2Module.forRoot(),
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

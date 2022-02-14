@@ -41,5 +41,11 @@ namespace api.Controllers
         {
             return Ok(_summaryService.Update(summary));
         }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            return Ok(_summaryService.Delete(id));
+        }
     }
 }

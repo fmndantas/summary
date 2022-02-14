@@ -9,14 +9,14 @@
               [attr.aria-controls]="bodyUuid"
       >
         <div class="d-flex align-items-baseline container-row">
-          <div *ngIf="content.isLeaf">
+          <div *ngIf="delegate.isLeaf">
             <input type="checkbox" (change)="toggle()" [checked]="isCompleted"/>
           </div>
-          <div *ngIf="!content.isLeaf">
-            ({{content.doneItems}}/{{content.totalOfItems}})
+          <div *ngIf="!delegate.isLeaf">
+            ({{delegate.doneItems}}/{{delegate.totalOfItems}})
           </div>
           <div [style]="TitleStyle">
-            {{content.Title}}
+            {{delegate.Title}}
           </div>
           <span style="color: gray"> | </span>
           <div class="d-flex action">
@@ -29,7 +29,7 @@
             <a *ngIf="isNotRoot" (click)="addEqualAfter()" class="p-1">
               <i class="fa fa-arrow-down"></i>
             </a>
-            <a (click)="edit()" class="p-1">
+            <a *ngIf="isNotRoot" (click)="edit()" class="p-1">
               <i class="fa fa-edit"></i>
             </a>
             <a *ngIf="isNotRoot" (click)="liftCopyToRootAndCut()" class="p-1">
@@ -38,7 +38,7 @@
             <a (click)="receiveCopy()" class="p-1">
               <i class="fa fa-paste"></i>
             </a>
-            <a *ngIf="isNotRoot" (click)="removeFromFather()" class="p-1">
+            <a *ngIf="isNotRoot" (click)="removeThisFromFather()" class="p-1">
               <i class="fa fa-trash"></i>
             </a>
           </div>
@@ -49,12 +49,12 @@
          class="accordion-collapse collapse show"
          [attr.aria-labelledby]="headerUuid"
          [attr.data-bs-parent]="addHash(containerUuid)"
-         *ngIf="!content.isLeaf"
+         *ngIf="!delegate.isLeaf"
     >
-      <div class="accordion-body">
-        <ul *ngFor="let child of content.Children">
+      <div class="accordion-body container-body">
+        <ul *ngFor="let child of delegate.Children">
           <app-container
-            [content]="child"
+            [delegate]="child"
             [title]="title"
             (notifyChange)="_notifyChange()"
           >

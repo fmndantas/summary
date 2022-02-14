@@ -23,7 +23,7 @@ public class SummaryServiceTest
         {
             Title = "Test title",
             Author = "Test author",
-            Content = "Test content"
+            Root = "Test content"
         };
 
         Assert.AreEqual(0, toSave.Id);

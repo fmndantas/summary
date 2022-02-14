@@ -4,7 +4,8 @@ namespace api.Models;
 
 public interface IAbstractRepository<T>
 {
-    void Add(T entity);
-    void Update(T entity);
+    T Add(T entity);
+    T Update(T entity);
     List<T> FindAll();
+    T Delete(int id);
 }
