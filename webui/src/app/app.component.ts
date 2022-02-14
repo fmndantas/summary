@@ -1,6 +1,4 @@
 import {Component} from '@angular/core';
-import {GenericModalService} from "./generic-modal/generic-modal.service";
-// import {IModalRegistry} from "./generic-modal/generic-modal.model";
 
 @Component({
   selector: 'app-root',
@@ -8,10 +6,6 @@ import {GenericModalService} from "./generic-modal/generic-modal.service";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(private modalService: GenericModalService) {
+  constructor() {
   }
-
-  // get Modals(): IModalRegistry {
-  //   return this.modalService.registry;
-  // }
 }
