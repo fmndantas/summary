@@ -7,8 +7,13 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "test:jest": "jest --watch",
-    "test:jest:coverage": "jest --coverage"
+    "jest": "jest --watch --silent=false",
+    "jest:coverage": "jest --coverage"
+  },
+  "jest": {
+    "verbose": true,
+    "coveragePathIgnorePatterns": ["src/test.ts"],
+    "testPathIgnorePatterns": ["src/test.ts"]
   },
   "private": true,
   "dependencies": {
