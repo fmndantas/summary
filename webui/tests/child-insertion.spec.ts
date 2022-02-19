@@ -1,6 +1,6 @@
 import 'jest';
 import {Container, IContainer} from "../src/app/container/container.model";
-import {OrderedContainerInsertion} from "./test-utils";
+import {OrderedContainerInsertion} from "./utils";
 
 describe("Path container", () => {
   let root!: IContainer;
