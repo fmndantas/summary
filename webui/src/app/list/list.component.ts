@@ -35,7 +35,7 @@ export class ListComponent implements OnInit {
     this.summary = this.summaries[i];
   }
 
-  setCurrentSummaryEmpty() {
+  setCurrentSummaryAsNullSummary() {
     this.summary = new NullAppSummary();
   }
 
@@ -57,7 +57,7 @@ export class ListComponent implements OnInit {
     this._showContentForm = false;
     this._showSummaryForm = false;
     this.fetchSummaries();
-    this.setCurrentSummaryEmpty();
+    this.setCurrentSummaryAsNullSummary();
   }
 
   handleConfirm() {

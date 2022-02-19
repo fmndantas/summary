@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using api.Models;
 using api.Models.Entities;
@@ -15,14 +16,11 @@ public class MockSummaryRepositoryImpl : IAbstractRepositoryImpl<Summary>
         Id = 1;
     }
 
-    public void Add(Summary entity)
+    public Summary Add(Summary entity)
     {
         entity.Id = Id++;
         entities.Add(entity);
-    }
-
-    public void Update(Summary entity)
-    {
+        return entity;
     }
 
     public List<Summary> FindAll()
@@ -30,7 +28,23 @@ public class MockSummaryRepositoryImpl : IAbstractRepositoryImpl<Summary>
         return entities;
     }
 
+    public Summary Update(Summary entity)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Summary FindById(int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Summary Delete(int id)
+    {
+        throw new NotImplementedException();
+    }
+
     public void Commit()
     {
+        throw new NotImplementedException();
     }
 }

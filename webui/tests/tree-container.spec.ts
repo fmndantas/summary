@@ -1,5 +1,6 @@
 import 'jest';
-import {IContainer, Container} from "../src/app/container/container.model";
+import {IContainer, Container, generateUuid, SequencedTraversal} from "../src/app/container/container.model";
+import {ContainerComparator} from "./utils";
 
 describe("Common tree container", () => {
   let root!: IContainer;
@@ -26,7 +27,7 @@ describe("Common tree container", () => {
     children[1].addChild(children[5]);
   });
 
-  it("root should have on total items", () => {
+  it("root should have four total items", () => {
     expect(root.totalOfItems).toEqual(4);
   })
 
@@ -34,27 +35,39 @@ describe("Common tree container", () => {
     expect(root.doneItems).toEqual(0);
   })
 
-  it("the number of root's done items should be progressively increased", () => {
-    children[5].mark();
-    expect(root.doneItems).toEqual(1);
-    children[4].mark();
-    expect(root.doneItems).toEqual(2);
-    children[3].mark();
-    expect(root.doneItems).toEqual(3);
-    children[2].mark();
-    expect(root.doneItems).toEqual(4);
+  it("the number of root's done items should be progressively increased as children are marked",
+    () => {
+      children[5].mark();
+      expect(root.doneItems).toEqual(1);
+      children[4].mark();
+      expect(root.doneItems).toEqual(2);
+      children[3].mark();
+      expect(root.doneItems).toEqual(3);
+      children[2].mark();
+      expect(root.doneItems).toEqual(4);
+    })
+
+  it("each children's root should be the correct root", () => {
+    children.forEach(x => {
+      expect(x.Root).toEqual(root);
+      expect(ContainerComparator.equal(x.Root, root)).toBeTruthy();
+    });
   })
 
-  it("the root should be found", () => {
-    children.forEach(x => expect(x.Root).toEqual(root));
-  })
-
-  it("nested addition should be correct", () => {
+  it("nested addition should change root's number of total items " +
+    "and should not change already existing children's number of total items", () => {
     let oldTotal: number = root.totalOfItems;
     let childrenTotals: number[] = children.map((x: IContainer) => x.totalOfItems);
     root.addNested("new nested container");
     expect(root.totalOfItems).toEqual(oldTotal + 1);
     children.forEach((x, index) => expect(x.totalOfItems).toEqual(childrenTotals[index]));
+  })
+
+  it("nested children should have the right father", () => {
+    let title: string = generateUuid();
+    root.addNested(title);
+    expect(root.Children[root.Children.length - 1].Title).toEqual(title);
+    expect(root.Children[root.Children.length - 1].Father).toEqual(root);
   })
 
   it("equal before should be correct", () => {
@@ -100,4 +113,21 @@ describe("Common tree container", () => {
     // 0 b2 b3 b4 b1 b0 1
     // 0 b2 b3 b4 b5 b1 b0 1
   })
+
+  it("should return correct root", () => {
+    children.forEach(x => expect(root === x.Root));
+  })
+
+  it("when root is searched, mid-way containers should remain unchanged", () => {
+    root.Title = generateUuid();
+    let child = root
+      .Children[1]
+      .Children[2];
+    child.Title = generateUuid();
+    child.Root;
+    expect(child.Title !== root.Title).toBeTruthy();
+  })
+
+
+
 })

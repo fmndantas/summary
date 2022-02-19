@@ -15,20 +15,4 @@ public class SummaryServiceTest
         _mockRepository = new AbstractRepository<Summary>(new MockSummaryRepositoryImpl());
         _subject = new SummaryService(_mockRepository);
     }
-
-    [Test]
-    public void TestSave()
-    {
-        var toSave = new Summary
-        {
-            Title = "Test title",
-            Author = "Test author",
-            Root = "Test content"
-        };
-
-        Assert.AreEqual(0, toSave.Id);
-        _subject.Save(toSave);
-        Assert.AreEqual(1, toSave.Id);
-        Assert.AreEqual(1, _subject.FindAll().Count);
-    }
 }

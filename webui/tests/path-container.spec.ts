@@ -48,7 +48,16 @@ describe("Path container", () => {
     expect(child3.totalOfItems).toEqual(1);
   })
 
-  it ("root should have on total items", () => {
+  it ("root should have one total items", () => {
     expect(root.totalOfItems).toEqual(1);
+  })
+
+  it("father removal should be correct", () => {
+    child3.removeItselfFromFather();
+    expect(child2.Children.length).toEqual(0);
+    child2.removeItselfFromFather();
+    expect(child1.Children.length).toEqual(0);
+    child1.removeItselfFromFather();
+    expect(root.Children.length).toEqual(0);
   })
 })

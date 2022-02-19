@@ -22,6 +22,10 @@ describe("Empty container", () => {
     expect(container.Root === container).toBeTruthy();
   })
 
+  it("its father should be null", () => {
+    expect(container.Father).toBeNull();
+  })
+
   it("should return empty list as children", () => {
     expect(container.Children.length === 0).toBeTruthy();
   })

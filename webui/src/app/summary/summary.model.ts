@@ -4,7 +4,7 @@ export interface ISummary {
   id: number;
   title: string,
   author: string;
-  root: string;
+  serializedRoot: string;
   year: number | null;
 }
 
@@ -19,7 +19,7 @@ export class AppSummary {
     this.id = json.id;
     this.title = json.title;
     this.author = json.author;
-    let plainContent: PlainContainer = JSON.parse(json.root);
+    let plainContent: PlainContainer = JSON.parse(json.serializedRoot);
     this.root = new Container(this.title, null);
     this.root.setStateFromJson(plainContent);
     this.year = json.year;
@@ -30,7 +30,7 @@ export class AppSummary {
       id: this.id,
       title: this.title,
       author: this.author,
-      root: JSON.stringify(this.root.serialize()),
+      serializedRoot: JSON.stringify(this.root.serialize()),
       year: this.year
     }
   }
@@ -52,7 +52,13 @@ const NullContainer: PlainContainer = {
 
 export class NullAppSummary extends AppSummary {
   constructor() {
-    super({id: 0, title: "", author: "", root: JSON.stringify(NullContainer), year: 0});
+    super({
+      id: 0,
+      title: "",
+      author: "",
+      serializedRoot: JSON.stringify(NullContainer),
+      year: 0
+    });
   }
 
   get empty(): boolean {
