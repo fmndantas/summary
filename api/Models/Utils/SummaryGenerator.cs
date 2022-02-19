@@ -9,17 +9,17 @@ namespace api.Models.Utils
 {
     public static class SummaryGenerator
     {
-        public static Summary Generate(int nodes, int titleLength)
+        public static Summary Generate(int nodes, int titleLength, int maximumDeep = 2)
         {
             return new Summary
             {
                 Title = GenerateWord(titleLength),
                 Author = GenerateWord(titleLength),
-                Root = JsonConvert.SerializeObject(GenerateContent(nodes, titleLength, 2))
+                SerializedRoot = JsonConvert.SerializeObject(GenerateContent(nodes, titleLength, maximumDeep))
             };
         }
 
-        private static string GenerateWord(int length)
+        public static string GenerateWord(int length)
         {
             const string chars = "abcdefghijklmnopqrstuvwxyz0123456789";
             var random = new Random();
