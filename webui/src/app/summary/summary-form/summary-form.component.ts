@@ -49,7 +49,7 @@ export class SummaryFormComponent implements OnChanges, IModal {
       id: this.summary.id,
       title: title,
       author: this.getFormControl("author").value,
-      root: JSON.stringify(root.serialize()),
+      serializedRoot: JSON.stringify(root.serialize()),
       year: year ? Number(year) : null
     };
   }
