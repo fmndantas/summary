@@ -25,7 +25,7 @@ export class ContainerComponent implements OnInit {
   }
 
   get isNotRoot(): boolean {
-    return this.delegate.Father != null;
+    return !this.delegate.isRoot;
   }
 
   get isCompleted(): boolean {
@@ -80,12 +80,12 @@ export class ContainerComponent implements OnInit {
   }
 
   removeThisFromFather(): void {
-    this.delegate.removeThisFromFather();
+    this.delegate.removeItselfFromFather();
     this._notifyChange();
   }
 
   liftCopyToRootAndCut() {
-    this.delegate.liftCopyToRoot();
+    this.delegate.liftItselfToTheRoot();
     this.removeThisFromFather();
   }
 

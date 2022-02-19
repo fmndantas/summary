@@ -6,6 +6,10 @@ export interface PlainContainer {
   children: PlainContainer[];
 }
 
+export const generateUuid = () => {
+  return "uuid" + UUID.UUID().replace(/-/g, "");
+}
+
 export interface IContainer {
   addChild(child: IContainer): void;
 
@@ -41,7 +45,7 @@ export interface IContainer {
 
   getContainerBeingCopied(): IContainer | null;
 
-  liftCopyToRoot(): void;
+  liftItselfToTheRoot(): void;
 
   receiveCopy(): void;
 
@@ -61,12 +65,9 @@ export interface IContainer {
 
   setStateFromJson(json: PlainContainer, reference: IContainer | null): void;
 
-  removeThisFromFather(): void;
+  removeItselfFromFather(): void;
 
-  // todo moveDown
-  // todo moveUp
-  // todo collapse
-  // todo think about changes in nesting level
+  accept(operator: IContainerOperator, context: any): any;
 }
 
 export class Container implements IContainer {
@@ -88,6 +89,7 @@ export class Container implements IContainer {
   }
 
   addChildOnPosition(child: IContainer, position: number) {
+    child.setFather(this);
     this.children.splice(position, 0, child);
   }
 
@@ -160,7 +162,7 @@ export class Container implements IContainer {
 
   get Root(): IContainer {
     let container: IContainer = this;
-    while (container.Father != null) {
+    while (container.Father !== null) {
       container = container.Father;
     }
     return container;
@@ -173,39 +175,21 @@ export class Container implements IContainer {
   }
 
   addNested(title: string) {
-    this.addChild(new Container(title, this))
+    this.addChild(new Container(title));
   }
 
   addEqualAfter(title: string) {
     if (this.Father != null) {
       let index = this.Father.Children.findIndex(x => x === this);
-      this.Father.addChildOnPosition(new Container(title, this.Father), index + 1);
+      this.Father.addChildOnPosition(new Container(title), index + 1);
     }
   }
 
   addEqualBefore(title: string) {
     if (this.Father != null) {
       let index = this.Father.Children.findIndex(x => x === this);
-      this.Father.addChildOnPosition(new Container(title, this.Father), index);
+      this.Father.addChildOnPosition(new Container(title), index);
     }
-  }
-
-  getState(): IContainer {
-    let copy: IContainer = new Container(this.title, this.father);
-    this.Children.forEach(x => copy.addChild(x.getState()));
-    copy.setCompleted(this.isCompleted);
-    return copy;
-  }
-
-  setState(reference: IContainer): void {
-    this.children = [];
-    reference.Children.forEach(x => {
-      let child = new Container(x.Title, this);
-      child.setState(x);
-      this.addChild(child);
-    })
-    this.title = reference.Title;
-    this.setCompleted(reference.isCompleted);
   }
 
   serialize(): PlainContainer {
@@ -227,7 +211,25 @@ export class Container implements IContainer {
     this.completed = json.completed;
   }
 
-  liftCopyToRoot(): void {
+  getState(): IContainer {
+    let snapshot: IContainer = new Container(this.title);
+    this.Children.forEach(x => snapshot.addChild(x.getState()));
+    snapshot.setCompleted(this.isCompleted);
+    return snapshot;
+  }
+
+  setState(snapshot: IContainer): void {
+    this.children = [];
+    snapshot.Children.forEach(x => {
+      let child = new Container(x.Title);
+      child.setState(x);
+      this.addChild(child);
+    })
+    this.title = snapshot.Title;
+    this.setCompleted(snapshot.isCompleted);
+  }
+
+  liftItselfToTheRoot(): void {
     this.Root.setContainerBeingCopied(this.getState());
   }
 
@@ -248,11 +250,32 @@ export class Container implements IContainer {
     this.beingCopied = beginCopied;
   }
 
-  removeThisFromFather() {
+  removeItselfFromFather() {
     this.Father?.removeChild(this);
+  }
+
+  accept(operator: IContainerOperator, context: any): any {
+    return operator.operate(this, context);
   }
 }
 
-export const generateUuid = () => {
-  return "uuid" + UUID.UUID().replace(/-/g, "");
+export interface IContainerOperator {
+  operate(container: IContainer, context: any): any;
+}
+
+/*
+ * @returns A reference (a.k.a the 'same' object) to child obtained by
+ * traversal that uses path passed inside @context
+ */
+export class SequencedTraversal implements IContainerOperator {
+  operate(container: IContainer, context: any): any {
+    if (!context.sequence) {
+      throw new Error("Sequence was not found on context");
+    }
+    let sequence: number[] = context.sequence;
+    sequence.forEach(x => {
+      container = container.Children[x];
+    })
+    return container;
+  }
 }
