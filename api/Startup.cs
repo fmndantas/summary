@@ -37,7 +37,9 @@ namespace api
             });
             
             // Controllers
-            services.AddControllers();
+            services
+                .AddControllers()
+                .AddNewtonsoftJson();
             
             // Database
             var connectionString = Configuration["SummaryContext:ConnectionString"];

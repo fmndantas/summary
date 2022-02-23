@@ -19,6 +19,7 @@ namespace api.Models.Entities
 
         public int? Year { get; set; }
 
+        [NotMapped]
         private Container root { get; set; }
 
         [NotMapped]
