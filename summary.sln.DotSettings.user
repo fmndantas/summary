@@ -1,0 +1,9 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	
+	
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=384531ce_002Dffe7_002D4af1_002Dbe7e_002D95fa4b667761/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="OnlySerializedContainerShouldBeSerialized #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;Project Location="/home/fernando/github/summary/tests" Presentation="&amp;lt;tests&amp;gt;" /&gt;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=79ac2f05_002D9438_002D4683_002D8f40_002Dbd69e3880149/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="OnlySerializedContainerShouldBeSerialized" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;Project Location="/home/fernando/github/summary/tests" Presentation="&amp;lt;tests&amp;gt;" /&gt;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

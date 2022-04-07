@@ -1,13 +1,16 @@
 using System.Collections.Generic;
 using System.Linq;
+using api.Controllers.Dto;
 using api.Models;
 using api.Models.Entities;
+using api.Models.Search;
+using api.Models.Search.Factory;
 
 namespace api.Services
 {
     public class SummaryService : ISummaryService
     {
-        private IAbstractRepository<Summary> _repository;
+        private readonly IAbstractRepository<Summary> _repository;
 
         public SummaryService(IAbstractRepository<Summary> repository)
         {
@@ -24,6 +27,22 @@ namespace api.Services
             return _repository
                 .FindAll()
                 .FirstOrDefault(x => x.Id == id);
+        }
+
+        public List<TokenizedTitleSummary> FindByMatcher(SummarySearchOptions options)
+        {
+            var result = new List<TokenizedTitleSummary>();
+            var tokenizer = new SsTokenizerFactory().MakeTokenizer(new TokenizerFactoryOptions(options));
+            foreach (var summary in FindAll())
+            {
+                var tokenizedTitleSummary = new TokenizedTitleSummary(summary, options.SearchText, tokenizer);
+                if (tokenizedTitleSummary.HasAnyResult)
+                {
+                    result.Add(tokenizedTitleSummary);
+                }
+            }
+
+            return result;
         }
 
         public Summary Save(Summary summary)

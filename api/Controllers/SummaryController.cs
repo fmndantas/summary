@@ -1,3 +1,4 @@
+using api.Controllers.Dto;
 using api.Models.Entities;
 using api.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +12,7 @@ namespace api.Controllers
     {
         private ISummaryService _summaryService;
         private ILogger<SummaryController> _logger;
-        
+
         public SummaryController(ISummaryService summaryService, ILogger<SummaryController> logger)
         {
             _summaryService = summaryService;
@@ -34,6 +35,12 @@ namespace api.Controllers
         public IActionResult Save([FromBody] Summary summary)
         {
             return Ok(_summaryService.Save(summary));
+        }
+
+        [HttpPost("matcher")]
+        public IActionResult FindByMatcher([FromBody] SummarySearchOptions options)
+        {
+            return Ok(_summaryService.FindByMatcher(options));
         }
 
         [HttpPut]

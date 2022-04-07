@@ -15,11 +15,11 @@ namespace api.Models.Utils
             {
                 Title = GenerateWord(titleLength),
                 Author = GenerateWord(titleLength),
-                SerializedRoot = JsonConvert.SerializeObject(GenerateContent(nodes, titleLength, maximumDeep))
+                SerializedRoot = JsonConvert.SerializeObject(GenerateContainer(nodes, titleLength, maximumDeep))
             };
         }
 
-        public static string GenerateWord(int length)
+        private static string GenerateWord(int length)
         {
             const string chars = "abcdefghijklmnopqrstuvwxyz0123456789";
             var random = new Random();
@@ -29,7 +29,7 @@ namespace api.Models.Utils
                 .ToArray());
         }
 
-        private static Container GenerateContent(int nodes, int titleLength, int maximumDeep = 1)
+        private static Container GenerateContainer(int nodes, int titleLength, int maximumDeep = 1)
         {
             var random = new Random();
 
@@ -54,8 +54,8 @@ namespace api.Models.Utils
         {
             var container = new Container
             {
-                title = GenerateWord(titleLength),
-                children = new List<Container>()
+                Title = GenerateWord(titleLength),
+                Children = new List<Container>()
             };
 
             foreach (var path in paths)
@@ -64,37 +64,37 @@ namespace api.Models.Utils
 
                 if (path.Count == 0)
                 {
-                    currentNode.children.Add(new Container
+                    currentNode.Children.Add(new Container
                     {
-                        title = GenerateWord(titleLength),
-                        children = new List<Container>()
+                        Title = GenerateWord(titleLength),
+                        Children = new List<Container>()
                     });
                 }
 
                 for (var j = 0; j < path.Count; ++j)
                 {
                     var next = path[j];
-                    var toAdd = next - currentNode.children.Count + 1;
+                    var toAdd = next - currentNode.Children.Count + 1;
 
                     for (var i = 0; i < Math.Max(0, toAdd); ++i)
                     {
-                        currentNode.children.Add(new Container
+                        currentNode.Children.Add(new Container
                         {
-                            title = GenerateWord(titleLength),
-                            children = new List<Container>()
+                            Title = GenerateWord(titleLength),
+                            Children = new List<Container>()
                         });
                     }
 
                     if (j == path.Count - 1)
                     {
-                        currentNode.children[next].children.Add(new Container
+                        currentNode.Children[next].Children.Add(new Container
                         {
-                            title = GenerateWord(titleLength),
-                            children = new List<Container>()
+                            Title = GenerateWord(titleLength),
+                            Children = new List<Container>()
                         });
                     }
 
-                    currentNode = currentNode.children[next];
+                    currentNode = currentNode.Children[next];
                 }
             }
 

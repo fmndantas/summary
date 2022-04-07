@@ -1,0 +1,37 @@
+<div class="col-md-12 accordion" [id]="containerUuid">
+  <div [class]="accordionItemClassOrNot()">
+    <div class="accordion-header" [id]="headerUuid">
+      <button [class]="buttonClassOrNot()"
+              type="button"
+              data-bs-toggle="collapse"
+              [attr.data-bs-target]="'#' + bodyUuid"
+              aria-expanded="true"
+              [attr.aria-controls]="bodyUuid"
+      >
+        <div>
+          <ng-container *ngFor="let token of delegate.getTitle()">
+            <em *ngIf="token.selected; else nonSelected">{{token.content}}</em>
+            <ng-template #nonSelected>
+              <span>{{token.content}}</span>
+            </ng-template>
+          </ng-container>
+        </div>
+      </button>
+    </div>
+    <div [id]="bodyUuid"
+         class="accordion-collapse collapse show"
+         [attr.aria-labelledby]="headerUuid"
+         [attr.data-bs-parent]="'#' + containerUuid"
+         *ngIf="!delegate.isLeaf()"
+    >
+      <div class="accordion-body container-body">
+        <ul *ngFor="let child of delegate.getChildren()">
+          <app-search-container
+            [delegate]="child"
+          >
+          </app-search-container>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

@@ -13,6 +13,10 @@ import {HighlightDirective} from './highlight.directive';
 import {SweetAlert2Module} from "@sweetalert2/ngx-sweetalert2";
 import {GenericModalComponent} from './generic-modal/generic-modal.component';
 import {SummaryFormComponent} from './summary/summary-form/summary-form.component';
+import { PageListComponent } from './page-list/page-list.component';
+import { PageSearchComponent } from './page-search/page-search.component';
+import { SearchContainerComponent } from './search-container/search-container.component';
+import { SearchSummaryComponent } from './search-summary/search-summary.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +27,10 @@ import {SummaryFormComponent} from './summary/summary-form/summary-form.componen
     HighlightDirective,
     GenericModalComponent,
     SummaryFormComponent,
+    PageListComponent,
+    PageSearchComponent,
+    SearchContainerComponent,
+    SearchSummaryComponent,
   ],
   imports: [
     BrowserModule,

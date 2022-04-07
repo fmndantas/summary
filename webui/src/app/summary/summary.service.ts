@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {ISummary} from "./summary.model";
 import {Observable} from "rxjs";
 import {environment} from "../../environments/environment";
+import {ISearchSummary} from "../search-summary/search-summary.model";
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,15 @@ export class SummaryService {
   public findById$(id: number): Observable<ISummary> {
     return this.http
       .get<ISummary>(`${environment.api}summary/${id}`);
+  }
+
+  public findByTitle$(title: string): Observable<ISearchSummary[]> {
+    let body: any = {
+      searchText: title,
+      caseInsensitive: true
+    };
+    return this.http
+      .post<ISearchSummary[]>(`${environment.api}summary/matcher`, body);
   }
 
   public save$(summary: ISummary): Observable<ISummary> {
