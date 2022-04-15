@@ -1,14 +1,22 @@
-using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace api.Models.Dto
 {
     public class Container : IEmpty
     {
-        public string title { get; set; }
-        public List<Container> children { get; set; }
+        public Container()
+        {
+            Children = new List<Container>();
+        }
+        
+        public string Title { get; set; }
+        public List<Container> Children { get; set; }
 
+        [JsonIgnore]
+        public int ChildrenCounting => Children.Count;
+        
         public virtual bool isEmpty()
         {
             return false;
@@ -26,9 +34,9 @@ namespace api.Models.Dto
                 builder.Append('\t');
             }
 
-            builder.Append(title);
+            builder.Append(Title);
             builder.Append('\n');
-            children.ForEach(x => x.Print(tab + 1, builder));
+            Children.ForEach(x => x.Print(tab + 1, builder));
             return builder.ToString();
         }
     }

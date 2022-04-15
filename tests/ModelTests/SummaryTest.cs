@@ -2,9 +2,9 @@ using api.Models.Entities;
 using api.Models.Utils;
 using NUnit.Framework;
 
-namespace tests.ServicesTests.SearchTests;
+namespace tests.ModelTests;
 
-public class TestSearchByTopic
+public class SummaryTest
 {
     private Summary _summary;
 
@@ -17,16 +17,17 @@ public class TestSearchByTopic
     [Test]
     public void RootContainerShouldBeLazyInitialized()
     {
+        Assert.True(_summary.IsRootEmpty);
         var root = _summary.Root;
-        Assert.False(root.isEmpty());
+        Assert.False(_summary.IsRootEmpty);
     }
 
     [Test]
-    public void AssertContainerReturnedByGetterIsTheSameThanSummary()
+    public void ContainerReturnedByGetterShouldBeTheSameThanSummaryContainer()
     {
-        var newTitle = SummaryGenerator.GenerateWord(20);
+        var newTitle = "12345678890!@#$%*()";
         var root = _summary.Root;
-        _summary.Root.title = newTitle;
-        Assert.AreEqual(newTitle, root.title);
+        _summary.Root.Title = newTitle;
+        Assert.AreEqual(newTitle, root.Title);
     }
 }

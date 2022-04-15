@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using api.Controllers.Dto;
 using api.Models.Entities;
 
 namespace api.Services
@@ -10,6 +11,8 @@ namespace api.Services
         Summary FindById(int id);
 
         Summary Save(Summary summary);
+
+        List<TokenizedTitleSummary> FindByMatcher(SummarySearchOptions options);
 
         Summary Update(Summary summary);
 

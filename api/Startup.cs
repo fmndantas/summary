@@ -18,6 +18,7 @@ namespace api
         }
 
         public IConfiguration Configuration { get; }
+        
         private readonly string CorsServiceName = "CorsPolicy";
 
         public void ConfigureServices(IServiceCollection services)
@@ -35,16 +36,18 @@ namespace api
                             .AllowCredentials();
                     });
             });
-            
+
             // Controllers
-            services.AddControllers();
-            
+            services
+                .AddControllers()
+                .AddNewtonsoftJson();
+
             // Database
             var connectionString = Configuration["SummaryContext:ConnectionString"];
             services.AddDbContext<SummaryContext>(opt =>
                 opt.UseNpgsql(connectionString)
             );
-            
+
             // Summary
             services.AddScoped<IAbstractRepositoryImpl<Summary>, AbstractRepositoryDatabaseImpl<Summary>>();
             services.AddScoped<IAbstractRepository<Summary>, AbstractRepository<Summary>>();

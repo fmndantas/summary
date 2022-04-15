@@ -1,0 +1,28 @@
+<div class="d-flex m-2 w-25">
+  <input class="form-control"
+         placeholder="Search text"
+         #searchText/>
+  <button class="form-control w-25 btn btn-dark"
+          (click)="search(searchText.value)"
+          style="margin-left: 0.5rem">
+    <i class="fa fa-search"></i>
+  </button>
+</div>
+<div *ngFor="let searchSummary of searchSummaries; let i = index"
+     (click)="showSearchItem(i)"
+     appHighlight="lightgray"
+     class="m-2">
+  <p>{{searchSummary.title}}</p>
+</div>
+<app-generic-modal
+  *ngIf="_showSearchItem"
+  [visible]="_showSearchItem"
+  [width]="1000"
+  (handleCancel)="hideSearchItem()"
+>
+  <app-search-summary
+    #content
+    [delegate]="searchSummary"
+  >
+  </app-search-summary>
+</app-generic-modal>

@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text;
 using api.Models.Dto;
 using Newtonsoft.Json;
 
@@ -19,7 +20,9 @@ namespace api.Models.Entities
 
         public int? Year { get; set; }
 
-        private Container root { get; set; }
+        [NotMapped] private Container root { get; set; }
+
+        [NotMapped] public bool IsRootEmpty => root.isEmpty();
 
         [NotMapped]
         [JsonIgnore]
@@ -40,7 +43,11 @@ namespace api.Models.Entities
 
         public string Print(int tab = 0)
         {
-            return $"Title = {Title}\nAuthor = {Author}\n\n{Root.Print()}";
+            return new StringBuilder()
+                .Append($"Title = {Title}\n")
+                .Append($"Author = {Author}\n")
+                .Append($"{Root.Print()}")
+                .ToString();
         }
     }
 }
