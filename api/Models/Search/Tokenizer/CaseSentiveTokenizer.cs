@@ -5,10 +5,10 @@ namespace api.Models.Search.Tokenizer;
 
 public class CaseSentiveTokenizer : ITokenizer
 {
-    public List<Token> GetTokens(string searchParameters, string content)
+    public List<Token> GetTokens(string searchText, string content)
     {
         content = content
-            .Replace(searchParameters, "~");
+            .Replace(searchText, "~");
         var start = 0;
         var tokens = new List<Token>();
         for (var i = 0; i < content.Length; ++i)
@@ -20,7 +20,7 @@ public class CaseSentiveTokenizer : ITokenizer
                     tokens.Add(new Token(content.Substring(start, i - start), false));
                 }
 
-                tokens.Add(new Token(searchParameters, true));
+                tokens.Add(new Token(searchText, true));
 
                 start = i + 1;
             }

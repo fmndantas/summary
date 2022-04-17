@@ -13,10 +13,12 @@ public class TokenizedListItem
         Children = new List<TokenizedListItem>();
         Title = new List<Token>();
         _tokenizer = tokenizer;
+        _asItIsTokenizer = new AsItIsTokenizer();
     }
 
     private ITokenizer _tokenizer;
-
+    private ITokenizer _asItIsTokenizer;
+    
     public List<Token> Title { get; set; }
 
     public List<TokenizedListItem> Children { get; set; }
@@ -59,6 +61,6 @@ public class TokenizedListItem
     {
         Title = searchParameters.TokenizeTitle
             ? _tokenizer.GetTokens(searchParameters.SearchText, listItem.Title)
-            : new List<Token> { new Token(listItem.Title, false) };
+            : _asItIsTokenizer.GetTokens(string.Empty, listItem.Title);
     }
 }
