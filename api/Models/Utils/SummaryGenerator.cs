@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using api.Models.Dto;
 using api.Models.Entities;
 using Newtonsoft.Json;
 
@@ -15,7 +14,7 @@ namespace api.Models.Utils
             {
                 Title = GenerateWord(titleLength),
                 Author = GenerateWord(titleLength),
-                SerializedRoot = JsonConvert.SerializeObject(GenerateContainer(nodes, titleLength, maximumDeep))
+                SerializedRoot = JsonConvert.SerializeObject(GenerateListItem(nodes, titleLength, maximumDeep))
             };
         }
 
@@ -29,7 +28,7 @@ namespace api.Models.Utils
                 .ToArray());
         }
 
-        private static Container GenerateContainer(int nodes, int titleLength, int maximumDeep = 1)
+        private static ListItem GenerateListItem(int nodes, int titleLength, int maximumDeep = 1)
         {
             var random = new Random();
 
@@ -43,32 +42,24 @@ namespace api.Models.Utils
                 {
                     path.Add(random.Next(4));
                 }
-            
+
                 paths.Add(path);
             }
 
             return GenerateContainerFromPaths(paths, titleLength);
         }
 
-        private static Container GenerateContainerFromPaths(List<List<int>> paths, int titleLength)
+        private static ListItem GenerateContainerFromPaths(List<List<int>> paths, int titleLength)
         {
-            var container = new Container
-            {
-                Title = GenerateWord(titleLength),
-                Children = new List<Container>()
-            };
+            var item = new ListItem { Title = GenerateWord(titleLength) };
 
             foreach (var path in paths)
             {
-                var currentNode = container;
+                var currentNode = item;
 
                 if (path.Count == 0)
                 {
-                    currentNode.Children.Add(new Container
-                    {
-                        Title = GenerateWord(titleLength),
-                        Children = new List<Container>()
-                    });
+                    currentNode.AddChild(new ListItem { Title = GenerateWord(titleLength) });
                 }
 
                 for (var j = 0; j < path.Count; ++j)
@@ -78,27 +69,19 @@ namespace api.Models.Utils
 
                     for (var i = 0; i < Math.Max(0, toAdd); ++i)
                     {
-                        currentNode.Children.Add(new Container
-                        {
-                            Title = GenerateWord(titleLength),
-                            Children = new List<Container>()
-                        });
+                        currentNode.AddChild(new ListItem { Title = GenerateWord(titleLength) });
                     }
 
                     if (j == path.Count - 1)
                     {
-                        currentNode.Children[next].Children.Add(new Container
-                        {
-                            Title = GenerateWord(titleLength),
-                            Children = new List<Container>()
-                        });
+                        currentNode.Children[next].AddChild(new ListItem { Title = GenerateWord(titleLength) });
                     }
 
                     currentNode = currentNode.Children[next];
                 }
             }
 
-            return container;
+            return item;
         }
     }
 }

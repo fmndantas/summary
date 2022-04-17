@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using api.Models.Dto;
-using api.Models.Search;
+using api.Models.Entities;
 using api.Models.Search.Tokenizer;
 using NUnit.Framework;
 

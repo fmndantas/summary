@@ -1,4 +1,3 @@
-using api.Models.Search;
 using api.Models.Search.Tokenizer;
 using NUnit.Framework;
 
