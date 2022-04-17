@@ -25,7 +25,8 @@ export class SummaryService {
   public findByTitle$(title: string): Observable<ISearchSummary[]> {
     let body: any = {
       searchText: title,
-      caseInsensitive: true
+      caseInsensitive: true,
+      tokenizeTitle: true
     };
     return this.http
       .post<ISearchSummary[]>(`${environment.api}summary/matcher`, body);
