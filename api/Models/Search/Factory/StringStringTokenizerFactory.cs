@@ -3,9 +3,9 @@ using api.Models.Search.Tokenizer;
 
 namespace api.Models.Search.Factory;
 
-public class SsTokenizerFactory : ITokenizerFactory<string, string>
+public class StringStringTokenizerFactory : ITokenizerFactory
 {
-    public ITokenizer<string, string> MakeTokenizer(TokenizerFactoryOptions options)
+    public ITokenizer MakeTokenizer(TokenizerFactoryOptions options)
     {
         if (options.TokenizerType == TokenizerType.CaseSensitive)
         {

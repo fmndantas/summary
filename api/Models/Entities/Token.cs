@@ -1,4 +1,4 @@
-namespace api.Models.Dto;
+namespace api.Models.Entities;
 
 public class Token
 {

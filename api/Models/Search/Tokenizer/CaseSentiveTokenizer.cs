@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using api.Models.Dto;
+using api.Models.Entities;
 
 namespace api.Models.Search.Tokenizer;
 
-public class CaseSentiveTokenizer : ITokenizer<string, string>
+public class CaseSentiveTokenizer : ITokenizer
 {
     public List<Token> GetTokens(string searchParameters, string content)
     {

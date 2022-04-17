@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using api.Models.Dto;
+using api.Models.Entities;
 
 namespace api.Models.Search.Tokenizer;
 
-public interface ITokenizer<TA, TB>
+public interface ITokenizer
 {
-    List<Token> GetTokens(TA searchParameters, TB content);
+    List<Token> GetTokens(string searchParameters, string content);
 }

@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using api.Models.Dto;
+using api.Models.Entities;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
@@ -10,28 +10,14 @@ public class TestContainerDeserialization
     [Test]
     public void TestSimpleContainerDeserialization()
     {
-        var originalRoot = new Container
-        {
-            Title = "1",
-            Children = new List<Container>
-            {
-                new Container
-                {
-                    Title = "11",
-                    Children = new List<Container>()
-                },
-                new Container
-                {
-                    Title = "12",
-                    Children = new List<Container>()
-                }
-            }
-        };
+        var originalRoot = new ListItem { Title = "1" };
+        originalRoot.AddChild(new ListItem { Title = "11" });
+        originalRoot.AddChild(new ListItem { Title = "12" });
 
         var serializedOriginalRoot = JsonConvert.SerializeObject(originalRoot);
-        
-        var deserializedRoot = JsonConvert.DeserializeObject<Container>(serializedOriginalRoot);
-        
+
+        var deserializedRoot = JsonConvert.DeserializeObject<ListItem>(serializedOriginalRoot);
+
         Assert.AreEqual(originalRoot.Title, deserializedRoot?.Title);
         Assert.AreEqual(originalRoot.Children[0].Title, deserializedRoot?.Children[0].Title);
         Assert.AreEqual(originalRoot.Children[1].Title, deserializedRoot?.Children[1].Title);

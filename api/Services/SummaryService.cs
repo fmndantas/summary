@@ -29,13 +29,14 @@ namespace api.Services
                 .FirstOrDefault(x => x.Id == id);
         }
 
-        public List<TokenizedTitleSummary> FindByMatcher(SummarySearchOptions options)
+        public List<TokenizedSummary> FindByMatcher(SummarySearchOptions options)
         {
-            var result = new List<TokenizedTitleSummary>();
-            var tokenizer = new SsTokenizerFactory().MakeTokenizer(new TokenizerFactoryOptions(options));
+            var result = new List<TokenizedSummary>();
+            var tokenizer = new StringStringTokenizerFactory()
+                .MakeTokenizer(new TokenizerFactoryOptions(options));
             foreach (var summary in FindAll())
             {
-                var tokenizedTitleSummary = new TokenizedTitleSummary(summary, options.SearchText, tokenizer);
+                var tokenizedTitleSummary = new TokenizedSummary(summary, options, tokenizer);
                 if (tokenizedTitleSummary.HasAnyResult)
                 {
                     result.Add(tokenizedTitleSummary);

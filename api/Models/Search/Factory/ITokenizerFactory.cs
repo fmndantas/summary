@@ -2,7 +2,7 @@ using api.Models.Search.Tokenizer;
 
 namespace api.Models.Search.Factory;
 
-public interface ITokenizerFactory<TA, TB>
+public interface ITokenizerFactory
 {
-    ITokenizer<TA, TB> MakeTokenizer(TokenizerFactoryOptions options);
+    ITokenizer MakeTokenizer(TokenizerFactoryOptions options);
 }

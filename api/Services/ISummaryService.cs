@@ -12,7 +12,7 @@ namespace api.Services
 
         Summary Save(Summary summary);
 
-        List<TokenizedTitleSummary> FindByMatcher(SummarySearchOptions options);
+        List<TokenizedSummary> FindByMatcher(SummarySearchOptions options);
 
         Summary Update(Summary summary);
 

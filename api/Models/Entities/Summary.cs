@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
-using api.Models.Dto;
 using Newtonsoft.Json;
 
 namespace api.Models.Entities
@@ -9,7 +8,7 @@ namespace api.Models.Entities
     {
         public Summary()
         {
-            root = new EmptyContainer();
+            root = new EmptyListItem();
         }
 
         public int Id { get; set; }
@@ -20,19 +19,19 @@ namespace api.Models.Entities
 
         public int? Year { get; set; }
 
-        [NotMapped] private Container root { get; set; }
+        [NotMapped] private ListItem root { get; set; }
 
-        [NotMapped] public bool IsRootEmpty => root.isEmpty();
+        [NotMapped] public bool IsRootEmpty => root.IsEmpty();
 
         [NotMapped]
         [JsonIgnore]
-        public Container Root
+        public ListItem Root
         {
             get
             {
-                if (root.isEmpty())
+                if (root.IsEmpty())
                 {
-                    root = JsonConvert.DeserializeObject<Container>(SerializedRoot);
+                    root = JsonConvert.DeserializeObject<ListItem>(SerializedRoot);
                 }
 
                 return root;

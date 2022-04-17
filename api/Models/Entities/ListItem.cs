@@ -1,28 +1,17 @@
-using System.Collections.Generic;
 using System.Text;
-using System.Text.Json.Serialization;
 
-namespace api.Models.Dto
+namespace api.Models.Entities
 {
-    public class Container : IEmpty
+    public class ListItem : Container<ListItem>
     {
-        public Container()
-        {
-            Children = new List<Container>();
-        }
-        
         public string Title { get; set; }
-        public List<Container> Children { get; set; }
 
-        [JsonIgnore]
-        public int ChildrenCounting => Children.Count;
-        
-        public virtual bool isEmpty()
+        public override bool IsEmpty()
         {
             return false;
         }
 
-        public string Print(int tab = 0, StringBuilder builder = null)
+        public override string Print(int tab = 0, StringBuilder builder = null)
         {
             if (builder == null)
             {
