@@ -5,12 +5,12 @@ namespace api.Models.Search.Tokenizer;
 
 public class CaseInsensitiveTokenizer : ITokenizer
 {
-    public List<Token> GetTokens(string searchParameters, string content)
+    public List<Token> GetTokens(string searchText, string content)
     {
-        var lowerSearchParameters = searchParameters.ToLower();
+        var lowerSearchParameters = searchText.ToLower();
         var lowerContent = content.ToLower();
         var contentLength = lowerContent.Length;
-        var searchParametersLength = searchParameters.Length;
+        var searchParametersLength = searchText.Length;
         var starts = GetStarts(lowerSearchParameters, lowerContent);
         var tokens = new List<Token>();
         var i = 0;

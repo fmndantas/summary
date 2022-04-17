@@ -5,5 +5,5 @@ namespace api.Models.Search.Tokenizer;
 
 public interface ITokenizer
 {
-    List<Token> GetTokens(string searchParameters, string content);
+    List<Token> GetTokens(string searchText, string content);
 }
